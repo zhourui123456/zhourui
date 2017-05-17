@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body ng-app="myApp">
+<div ng-controller="sp">
+    <p>
+        <span>上衣：(单价)</span>
+        <span>80</span>
+        <span ng-click="add">+</span>
+        <span><input type="text" ng-model="num"></span>
+        <span ng-click="abb">-</span>
+    </p>
+    <p>
+        <span>裤子：(单价)</span>
+        <span>50</span>
+        <span ng-click="add">+</span>
+        <span><input type="text" ng-model="num"></span>
+        <span ng-click="abb">-</span>
+    </p>
+</div>
+<script src="../js/common/angular.js"></script>
+<script src="../js/common/jquery.js"></script>
+<script>
+    var app = angular.module('myApp', []).controller('sp',function($scope){
+        $scope.toggle = 0;
+        $scope.add = function () {
+            $scope.num++;
+            if ($scope.num > 10) {
+                $scope.num = 10;
+                alert('本商品您最多可购买10件');
+            }
+        };
+        $scope.abb = function () {
+            $scope.num--;
+            if ($scope.num < 0) {
+                $scope.num = 0;
+            }
+        }
+    })
+</script>
+</body>
+</html>

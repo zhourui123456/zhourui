@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body ng-app="myApp">
+
+<div ng-controller="rk12"></div>
+
+<script src="../js/common/jquery.js"></script>
+<script src="../js/common/angular.js"></script>
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('rk12', function ($scope, factory, num, id, data) {
+        $scope.factory = factory.value(4, 5);
+        console.log($scope.factory);     // 20
+
+//        $scope.provider = provider;
+//        console.log($scope.provider);
+
+        $scope.id = id;
+        console.log($scope.id);     // 1
+        $scope.num = num;
+        console.log($scope.num);    // 0
+        $scope.data = data;
+        console.log($scope.data);   // [1,2,3,4,5]
+    });
+
+    //    factory
+    app.factory('factory', function () {
+        var obj = {};
+        obj.value = function (a, b) {
+            return a * b;
+        };
+        return obj;
+    });
+
+    //        provider
+    app.provider('provider', function () {
+        $scope.values = 1;
+        return values;
+    });
+
+    //    constant
+    app.constant({num: 0});
+
+    //    value
+    app.value({id: 1});
+
+    //    service
+    app.service('data', function () {
+        return [1, 2, 3, 4, 5]
+    })
+</script>
+</body>
+</html>

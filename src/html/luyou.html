@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body ng-app="myApp">
+<div>
+    <a href="#/">这是首页页面</a> <br>
+    <a href="#/home">这是电脑分类页面</a> <br>
+    <a href="#/list">这是打印机页面</a> <br>
+    <a href="#/parge?id=1&name=zhangsan"> parge.html </a> <br>
+    <a href="#/lists">lists</a>
+
+    <br>
+    <div ng-view></div>
+</div>
+
+<script src="../js/common/angular.js"></script>
+<script src="../js/common/angular-route.js"></script>
+<script>
+    var app = angular.module('myApp', ['ngRoute']);
+    app.config(['$routeProvider', function ($routeProvider) {
+        $routeProvider
+                .when('/', {template: '这是首页页面'})
+                .when('/home', {template: '这是电脑分类页面'})
+                .when('/list', {template: '这是打印机页面'})
+                .when('/parge', {
+                    templateUrl: 'parge.html',  // 连接的url文件
+                    controller: function($scope,$route,$routeParams){
+                        this.title = 'this is a parge.html file!';
+                        console.log($routeParams.id);      // 1
+                        console.log($routeParams.name);      // zhangsan
+                    },
+                    controllerAs: "a"
+                })
+                .when('/lists', {
+                    templateUrl: 'list.html',  // 连接的url文件
+                    controller: "ft"
+                })
+                .otherwise({redirectTo: '/'});
+    }]);
+    app.controller('ft',function($scope){
+        $scope.item = 'this is a list.html file!'
+    });
+
+    var arr = [1,2,3,4,5];
+    delete Array[0];
+    console.log(arr)
+
+</script>
+</body>
+</html>

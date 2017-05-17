@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.a{
+			color: red;
+		}
+	</style>
+</head>
+
+<body>
+<div ng-app="myApp">
+	<div ng-controller="firstcon">
+		<!-- 每隔三个数会加上一个逗号分隔-->
+		<div>
+			<span class="a">每隔三个数会加上一个逗号分隔</span>
+			<p> {{123456789 | number}}</p>
+			<p ng-bind="12321313 | number"></p>
+		</div>
+
+		<!--保留三位小数点 -->
+		<div>
+			<span class="a">保留三位小数</span>
+			<p> {{123.456789 | number:3}}</p>
+			<p ng-bind="123.21313 | number:3"></p>
+		</div>
+		<!--人民币 -->
+		<div>
+			<span class="a">人民币</span>
+			<p> {{123456789 | currency}}</p>
+			<p ng-bind="12321313 | currency:'rmb'"></p>
+		</div>
+		<!--时间 -->
+		<div>
+			<span class="a">时间</span>
+			<span class="a">常用的写法</span>
+			<p> {{today | date:"y-M-d H:m:s"}}</p>
+			<span class="a">默认的一些样式，比较少用</span>
+			<p> {{today | date:"medium"}}</p>
+			<p> {{today | date:"short"}}</p>
+			<p> {{today | date:"fullDate"}}</p>
+			<p> {{today | date:"longDate"}}</p>
+			<span class="a">年的写法</span>
+			<p> {{today | date:"y"}}</p>
+			<p> {{today | date:"yy"}}</p>
+			<p> {{today | date:"yyyy"}}</p>
+			<span class="a">月的写法</span>
+			<p> {{today | date:"M"}}</p>
+			<p> {{today | date:"MM"}}</p>
+			<p> {{today | date:"MMM"}}</p>
+			<p> {{today | date:"MMMM"}}</p>
+			<span class="a">天的写法</span>
+			<p> {{today | date:"d"}}</p>
+			<p> {{today | date:"dd"}}</p>
+			<p> {{today | date:"EEE"}}</p>
+			<p> {{today | date:"EEEE"}}</p>
+			<span class="a">小时的写法</span>
+			<p> {{today | date:"HH"}}</p>
+			<p> {{today | date:"H"}}</p>
+			<p> {{today | date:"hh"}}</p>
+			<p> {{today | date:"h"}}</p>
+			<span class="a">分的写法</span>
+			<p> {{today | date:"mm"}}</p>
+			<p> {{today | date:"m"}}</p>
+			<span class="a">秒的写法</span>
+			<p> {{today | date:"ss"}}</p>
+			<p> {{today | date:"s"}}</p>
+		</div>
+	</div>
+
+</div>
+<script type="text/javascript" src="../js/common/jquery.js"></script>
+<script>
+	var app=angular.module("myApp",[],function($provide){
+//
+	})
+	app.factory('DATA',function(){
+		return {
+			name:"这里全部都是数据啊"
+		}
+	})
+	app.controller("firstcon",function($scope,DATA){
+		$scope.today=new Date();
+	})
+
+</script>
+
+</body>
+</html>

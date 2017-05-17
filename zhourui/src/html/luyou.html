@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body ng-app="myApp">
+<div ng-controller="ft">
+    <a href="#/">这是首页页面</a> <br>
+    <a href="#/home">这是电脑分类页面</a> <br>
+    <a href="#/list">这是打印机页面</a>
+    <br>
+    <div ng-view>
+        <a href="#/">这是首页页面</a> <br>
+        <a href="#/home">这是电脑分类页面</a> <br>
+        <a href="#/list">这是打印机页面</a>
+    </div>
+</div>
+
+<script src="../js/common/angular.js"></script>
+<script src="../js/common/angular-route.js"></script>
+<script>
+    var app = angular.module('myApp', ['ngRoute']);
+    app.controller('ft', function ($scope) {
+
+    });
+    app.config(['$routeProvider', function ($routeProvider) {
+        $routeProvider
+                .when('/', {template: '这是首页页面'})
+                .when('/home', {template: '这是电脑分类页面'})
+                .when('/list', {template: '这是打印机页面'})
+                .otherwise({redirectTo: '/'});
+    }]);
+</script>
+</body>
+</html>

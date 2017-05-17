@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<script src="../../../zhourui/src/js/common/jquery.js"></script>
+<script>
+    /* var wait = function(time, msg, statue){
+     var $defer = $.Deferred();
+     setTimeout(function(){
+     console.log(msg);
+     if(statue){
+     $defer.resolve(msg);
+     }else{
+     $defer.reject('error');
+     }
+     },time);
+     return $defer.promise();
+     };*/
+
+    //    var fn1 = wait(1000, '这是第一个延迟', true);
+    //    var fn2 = wait(3000, '这是第二个延迟', true);
+    //
+    //    fn1.then(function(data){
+    //        console.log(data+'成功了！');
+    //        return fn2;
+    //    }).then(function(data){
+    //        console.log(data+'成功了！');
+    //    })
+
+    // 输出json数据
+    var wait = function (time, url) {
+        var $defer = $.Deferred();
+        setTimeout(function () {
+            $.ajax({
+                url: url,
+                success: function (data) {
+//                   console.log(data);
+                    $defer.resolve(data);
+                },
+                error: function () {
+                    $defer.reject('error');
+                }
+            });
+        }, time);
+        return $defer.promise();
+    };
+    var fn1 = wait(1000, "../../data/data1.json");
+    var fn2 = wait(2000, "../../data/data2.json");
+
+    var datas = {};
+    fn1.then(function (data) {
+        console.log(data);
+        datas.data1 = data;
+        return fn2;
+    }).then(function (data) {
+        datas.data2 = data;
+        console.log(data);
+    }).then(function () {
+        console.log(datas);
+    })
+
+
+
+</script>
+</body>
+</html>

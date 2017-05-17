@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script src="../js/common/jquery.js"></script>
+<script src="../js/common/angular.js"></script>
+<div ng-app="myapp">
+    <div ng-controller="sp">
+        <p>
+            <span>上衣：(单价)</span>
+            <span class="sum">50</span>
+            <span ng-click="add()">+</span>
+            <input type="text" ng-model="num">
+            <span ng-click="abb()">-</span>
+        </p>
+
+        <p>
+            <span>裤子：(单价)</span>
+            <span class="price">80</span>
+            <span ng-click="add2()">+</span>
+            <input type="text" ng-model="num2">
+            <span ng-click="abb2()">-</span>
+        </p>
+
+        <h2>合计:<span ng-bind="toggle"></span></h2>
+    </div>
+</div>
+
+<script>
+    var app = angular.module('myapp', []);
+    app.controller('sp', function ($scope) {
+        $scope.num = 0;
+        $scope.num2 = 0;
+        $scope.sum = $('.sum').text();
+        $scope.price = $('.price').text();
+        $scope.toggle = 0;
+        $scope.add = function () {
+            $scope.num++;
+            if ($scope.num > 10) {
+                $scope.num = 10;
+                alert('本商品您最多可购买10件');
+            }
+            $scope.toggle = $scope.num * $scope.sum + $scope.num2 * $scope.price
+        };
+        $scope.abb = function () {
+            $scope.num--;
+            if ($scope.num <= 0) {
+                $scope.num = 0;
+            }
+            $scope.toggle = $scope.num * $scope.sum + $scope.num2 * $scope.price
+        };
+        $scope.add2 = function () {
+            $scope.num2++;
+            if ($scope.num2 > 10) {
+                $scope.num2 = 10;
+                alert('本商品您最多可购买10件');
+            }
+            $scope.toggle = $scope.num * $scope.sum + $scope.num2 * $scope.price
+        };
+        $scope.abb2 = function () {
+            $scope.num2--;
+            if ($scope.num2 <= 0) {
+                $scope.num2 = 0;
+            }
+            $scope.toggle = $scope.num * $scope.sum + $scope.num2 * $scope.price
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 2px;
+    }
+
+    h2 {
+        font-size: 16px;
+    }
+
+    ul li {
+        list-style: none;
+    }
+
+    span {
+        color: red;
+    }
+</style>
+<body ng-app="myapp">
+<div ng-controller="ft">
+    <ul>
+        <br>
+        <li><h2>每隔三个数会加上一个逗号分隔</h2></li>
+        <li>{{300000 | currency: '$' : 4}} <span>前边加$符，保留小数点后四位小数（默认保留小数点后两位小数）</span></li>
+        <li>{{300000 | number: '3'}} <span>保留小数点后3位小数</span></li>
+        <br>
+        <li><h2>大小写转换</h2></li>
+        <li>{{'lower cap string' | uppercase }} <span>转换为大写</span></li>
+        <li>{{'LOWER CAP STRING' | lowercase }} <span>转换为小写</span></li>
+        <br>
+        <li><h2>数字的截取</h2></li>
+        <li>{{123456789 | limitTo:5}} <span>从前边筛选出5个数字</span></li>
+        <li>{{123456789 | limitTo:-5}} <span>从后边筛选出5个数字</span></li>
+        <br>
+        <li><h2>内容的筛选(过滤器根据表达式过滤不包含过滤器中的内容)</h2></li>
+        <li>
+            {{ [{"age": 20,"id": 10,"name": "iphone"},
+            {"age": 12,"id": 11,"name": "sunm xing"},
+            {"age": 44,"id": 12,"name": "test abc"}
+            ] | filter:{'name':'iphone'} }}
+            <span>查找name为iphone的行</span>
+        </li>
+        <li>
+            {{ [{"age": 20,"id": 10,"name": "iphone"},
+            {"age": 12,"id": 11,"name": "sunm xing"},
+            {"age": 44,"id": 12,"name": "test abc"}
+            ] | filter:{'name':'i'} }}
+            <span>查找name中有i的行</span>
+        </li>
+        <li>
+            {{ 'asdfg' | aa }}
+            <span>自定义过滤器</span>
+        </li>
+        <li>
+            {{ [{"age": 20,"id": 10,"name": "iphone"},
+            {"age": 12,"id": 11,"name": "sunm xing"},
+            {"age": 44,"id": 12,"name": "test abc"}
+            ] | filter }}
+            <span>不进行筛选（按原本的内容显示）</span>
+        </li>
+        <br>
+        <li><h2>内容的顺序排列( 默认正序asc,倒序添加-负号)</h2></li>
+        <li>
+            {{ [{"age": 20,"id": 10,"name": "iphone"},
+            {"age": 12,"id": 11,"name": "sunm xing"},
+            {"age": 44,"id": 12,"name": "test abc"}
+            ] | orderBy: "asc" }}
+            <span>正序显示（asc 可以省略 因为默认值为asc）</span>
+        </li>
+        <li>
+            {{ [{"age": 20,"id": 10,"name": "iphone"},
+            {"age": 12,"id": 11,"name": "sunm xing"},
+            {"age": 44,"id": 12,"name": "test abc"}
+            ] | orderBy: "-" }}
+            <span>倒序显示</span>
+        </li>
+        <li>
+            {{ [{"age": 20,"id": 10,"name": "iphone"},
+            {"age": 12,"id": 11,"name": "sunm xing"},
+            {"age": 44,"id": 12,"name": "test abc"}
+            ] | orderBy: "age" }}
+            <span>按age的升序显示</span>
+        </li>
+        <li>
+            {{ [{"age": 20,"id": 10,"name": "iphone"},
+            {"age": 12,"id": 11,"name": "sunm xing"},
+            {"age": 44,"id": 12,"name": "test abc"}
+            ] | orderBy: "-age" }}
+            <span>按age的降序显示</span>
+        </li>
+    </ul>
+</div>
+
+
+<script src="../js/common/jquery.js"></script>
+<script src="../js/common/angular.js"></script>
+<script>
+    var app = angular.module('myapp', [])
+            .controller('ft', function ($scope) {
+            }).filter('aa', function () {               // 自定义过滤器，aa为自定义过滤名称 ，val为传参，split("")将val切割成数组，reverse()将数组反转，join("")将数组变成字符串
+                return function (val) {
+                    return val.split('').reverse().join('');
+                }
+            })
+
+</script>
+</body>
+</html>

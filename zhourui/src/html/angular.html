@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<style>
+    .red {
+        background: red;
+    }
+
+    .blue {
+        background: blue;
+    }
+</style>
+<body ng-app="myapp">
+<div ng-controller="first" ng-init="datas = ['周芮','李雅','丹丹']">
+    <ul>
+        <li ng-bind="name"></li>
+        <li><input type="text" ng-model="data" style="width: 300px" autofocus placeholder="改变该文本框中的内容，下个li中的内容随之改变">
+        </li>
+        <li ng-bind="data"></li>
+        <li ng-click="fn()">点击下一个li的值+1</li>
+        <li ng-bind="num"></li>
+        <li ng-click="showfn()">点击我显示还是隐藏</li>
+        <li ng-show="boll">显示还是隐藏</li>
+        <li ng-repeat="item in datas" ng-if="item == '周芮'">
+            {{item}}
+        </li>
+        <li ng-repeat="item in arr">
+            {{item}}
+        </li>
+        <li ng-class="{red: true, blue: true}"></li>
+        <li ng-click="class()">点击切换样式</li>
+        <li ng-class="{true: 'red', false: 'blue'}[boolean]"></li>
+        <li ng-repeat="item in names" ng-bind="item.name"></li>
+
+    </ul>
+</div>
+<script src="../js/common/angular.js"></script>
+<script>
+    var app = angular.module('myapp', []);
+
+    // controller
+    app.controller('first', function ($scope, $http, $interval, $timeout) {
+        $scope.name = '周芮';    // 在页面中输出name
+        $scope.data = '';        // mvvm
+        $scope.num = 1;          // 定义一个数字
+        $scope.fn = function () {
+            $scope.num++;
+        };                         // 点击该li
+        $scope.boll = true;        // 定义一个开关按钮
+        $scope.showfn = function () {
+            $scope.boll = !$scope.boll;
+        };
+        $scope.arr = [
+            "张三",
+            "李四"
+        ];                           // 定义一个数组
+        $scope.boolean = true;        // 定义一个改变背景色的开挂按钮
+        $scope.class = function () {
+            $scope.boolean = !$scope.boolean;
+        };
+
+//        $http
+        $http.get('../data/data1.json')      // get 和 post 一样
+//                .then(function(response){
+//                    $scope.names = response;
+//                    console.log($scope.names);
+//                },function(){
+//                    console.log('error');
+//                });
+                .success(function (response) {  // 发起请求成功时
+                    $scope.names = response;
+                    console.log($scope.names);
+                }).error(function () {            // 发起请求失败时
+                    console.log('error');
+                });
+
+//        $interval
+        $interval(function () {
+            console.log($scope.name);
+        }, 1000, 5, false);  // 1000执行时间。 5执行次数。 false跳过模块脏检查
+
+//        $timeout
+        $timeout(function(){
+            console.log($scope.num);
+        },2000);
+    });
+
+    // run
+    app.run(function ($q, $http) {
+
+        /*  var $defer1 = $q.defer();
+         var $defer2 = $q.defer();
+         setTimeout(function () {
+         $defer1.resolve('计时器1');
+         }, 1000);
+
+         setTimeout(function () {
+         $defer2.resolve('计时器2');
+         }, 3000);
+
+         $defer1.promise.then(function (data) {
+         console.log(data);
+         return $defer2.promise;
+         }).then(function (data){
+         console.log(data);
+         }) */
+
+        var deferred = $q.defer();
+        var promise = deferred.promise;     //promise用来描述异步执行结果
+        if (1>0) {
+            deferred.resolve();//表示成功执行
+        } else {
+            deferred.reject();//没有成功执行
+        }
+        promise.then(function(){
+            console.log('success');     //成功执行后调用
+        },function(){
+            console.log('error');    //这是第二个then，执行失败后调用
+        });
+
+//        解决多个ajax请求之间的依赖，除了用回调，还可以用promise。
+
+
+
+    });
+
+
+</script>
+</body>
+</html>

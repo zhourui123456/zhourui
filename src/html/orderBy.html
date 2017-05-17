@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<style>
+    p span{
+        display: inline-block;
+        width: 100px;
+        text-align: center;
+    }
+     .title{
+        position: relative;
+    }
+    .title span .san{
+        display: inline-block;
+        content: "";
+        border: 5px solid transparent;
+        border-top-color: #000;
+        position: absolute;
+        top: 10px;;
+    }
+</style>
+<body ng-app="myapp">
+    <div ng-controller="fr">
+        <input type="text" autofocus ng-model="search">
+        <button>search</button>
+        <p class="title">
+            <span ng-click="click('id')">序号 <b class="san"></b></span>
+            <span ng-click="click('model')">型号 <b class="san"></b></span>
+            <span ng-click="click('money')">价格 <b class="san"></b></span>
+        </p>
+        <p ng-repeat="item in data | filter: search | orderBy: order+type ">
+            <span>{{item.id}}</span>
+            <span>{{item.model}}</span>
+            <span>{{item.money}}</span>
+        </p>
+    </div>
+    <script src="../js/common/angular.js"></script>
+    <script src="../js/common/jquery.js"></script>
+    <script>
+        var app = angular.module('myapp', []);
+        app.controller('fr',function($scope,$http){
+//            $http({
+//                url:"http://localhost:90/html"
+//            }).success(function(data){
+//                $scope.data=data;
+//            });
+            $http.get('http://localhost:90/html').then(function(response){
+                $scope.data = response.data;
+            });
+
+            $scope.order = '';
+            $scope.click=function(obj){
+                $scope.type=obj;
+                if($scope.order == ''){
+                    $scope.order = '-';
+                }else{
+                    $scope.order = '';
+                }
+            };
+
+            $scope.sum = 0;
+            $('.title').on('click','span',function(){
+                $scope.sum++;
+                if($scope.sum %2 ==0){
+                    $(this).find('.san').css({
+                        "border-top-color": "#000",
+                        "border-bottom-color": "transparent",
+                        top: '10px'
+                    })
+                }else{
+                    $(this).find('.san').css({
+                        "border-top-color": "transparent",
+                        "border-bottom-color": "#000",
+                        top: '5px'
+                    })
+                }
+            })
+        })
+
+    </script>
+</body>
+</html>

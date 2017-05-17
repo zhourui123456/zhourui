@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.a{
+			color: red;
+		}
+	</style>
+</head>
+
+<body>
+<div ng-app="myApp">
+	<div ng-controller="firstcon">
+		<!-- 每隔三个数会加上一个逗号分隔-->
+		<div>
+			<span class="a">从前面筛选出5个数</span>
+			<p> {{123456789 | limitTo:5}}</p>
+			<span class="a">从后面筛选出5个数</span>
+			<p> {{123456789 | limitTo:-5}}</p>
+		</div>
+
+
+		<span class="a">转换为小写</span>
+		<p> {{DATA.name | lowercase}}</p>
+		<span class="a">转换为大写</span>
+		<p> {{DATA.name | uppercase}}</p>
+
+		<span class="a">过滤器filter</span><em>注意这里只是匹配value值</em>
+		<p> {{DATA.city | filter:'北京'}} <span>这里会把包含此字段的对象全部打印出来</span></p>
+		<p> {{DATA.city | filter:'j'}} <span>这里会把包含此字段的对象全部打印出来</span></p>
+		<p> {{DATA.city | filter:{pin:'j'} }} <span>过滤的是一个对象的形式</span></p>
+
+		<span class="a">过滤器orderBy</span>
+		<p> {{DATA.city | orderBy:'pin'}} <span>按照a-z的顺序把pin里面的对象打印出来(正序)</span></p>
+		<p> {{DATA.city | orderBy:'-pin'}} <span>按照 z-a的顺序把pin里面的对象打印出来（反序）</span></p>
+
+		<span class="a">过滤器JSON</span>
+		<p> {{number}}</p>
+		<p> {{json}}  <span>这是 json格式</span></p>
+		<p>{{DATA}}  <span>这是对象格式</span></p>
+
+		<span class="a">过滤器自定义方法</span>
+		<p> {{DATA.city| filter : filtername}}  <span>这是 json格式</span></p>
+		<!--<p>{{DATA.city}}  <span>这是对象格式</span></p>-->
+	</div>
+
+</div>
+<script type="text/javascript" src="js/angular.js"></script>
+<script>
+	var app=angular.module("myApp",[],function($provide){
+
+	})
+	app.factory('DATA',function(){
+		return {
+			name:"Hello Chen Yuanguang",
+			city:[
+				{
+					address:'北京',
+					pin:'beijing'
+				},
+				{
+					address:'上海',
+					pin:'shanghai'
+				},
+				{
+					address:'济南',
+					pin:'jinan'
+				}
+			]
+		}
+	})
+	app.controller("firstcon",function($scope,DATA,$filter){
+		$scope.today=new Date();
+		$scope.DATA=DATA;
+		//过滤器
+		$scope.number=$filter('number')(3000)
+
+		$scope.json=$filter('json')($scope.DATA)
+		$scope.filtername=function(obj){
+			if(obj.pin.indexOf('j')==-1)
+			return false;
+			return true;
+		}
+	})
+
+</script>
+
+</body>
+</html>

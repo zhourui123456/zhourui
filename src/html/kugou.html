@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,minmum-scale=1.0,maximum-scale=1.0,user-scablable=no"/>
+    <meta name="format-detection" content="telephone=no,email=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <link type="text/css" rel="stylesheet" href="../css/swiper.min.css">
+    <link type="text/css" rel="stylesheet" href="../css/reset.css">
+    <link type="text/css" rel="stylesheet" href="../css/common.css">
+    <link type="text/css" rel="stylesheet" href="../css/kugou.css">
+</head>
+<body ng-app="myApp">
+<header class="pr">
+    <img src="../images/new/pic_03.jpg" alt="" class="first-head pa">
+    <button>下载酷狗</button>
+    <img src="../images/new/pic_06.jpg" alt="" class="last-head pa">
+</header>
+<nav class="flex-parent">
+    <a href="#/new" class="flex-son pitch">新歌</a>
+    <a href="#/seniority" class="flex-son">排行</a>
+    <a href="#/gedan" class="flex-son">歌单</a>
+    <a href="#/geshou" class="flex-son">歌手</a>
+</nav>
+<div ng-view class="content"></div>
+<script src="../js/common/angular.js"></script>
+<script src="../js/common/angular-route.js"></script>
+<script src="../js/common/swiper.min.js"></script>
+<script src="../js/common/zepto.min.js"></script>
+<script>
+    var app = angular.module('myApp', ['ngRoute']);
+    app.config(['$routeProvider', function ($routeProvider) {
+        $routeProvider
+                .when('/new', {
+                    templateUrl: 'new.html',  // 连接的url文件
+                    controller: function ($scope) {
+                        this.swiper = '../images/new/pic_10.jpg';
+                        this.data = [
+                            "田馥甄 - 当你(live)",
+                            "韩寒、亭东小伙伴 - 在雨中【乘风破浪推广曲】",
+                            "张杰 - 三生三世【三生三世十里桃花主题曲】",
+                            "EXID - 上下",
+                            "魏晨 - 旅程"
+                        ];
+                        this.down = '../images/new/pic_13.jpg';
+                    },
+                    controllerAs: "new"
+                })
+                .when('/seniority', {
+                    templateUrl: 'seniority.html',  // 连接的url文件
+                    controller: function ($scope) {
+                        this.data = [
+                            {
+                                "img": "../images/new/seniority_03.jpg",
+                                "p": "酷狗飙升榜"
+                            },
+                            {
+                                "img": "../images/new/seniority_06.jpg",
+                                "p": "酷狗TOP500"
+                            },
+                            {
+                                "img": "../images/new/seniority_08.jpg",
+                                "p": "网络红歌榜"
+                            },
+                            {
+                                "img": "../images/new/seniority_10.jpg",
+                                "p": "DJ热歌榜"
+                            }
+                        ]
+                    },
+                    controllerAs: "seniority"
+                })
+                .when('/gedan', {
+                    templateUrl: 'gedan.html',  // 连接的url文件
+                    controller: function ($scope) {
+                        this.data = [
+                            {
+                                "img": "../images/new/gedan_03.jpg",
+                                "p": "梦想的声音 合辑",
+                                "num": 36207653
+                            },
+                            {
+                                "img": "../images/new/gedan_06.jpg",
+                                "p": "微路音乐会 合辑",
+                                "num": 372385
+                            },
+                            {
+                                "img": "../images/new/gedan_08.jpg",
+                                "p": "百首华歌挚爱情歌",
+                                "num": 46890991
+                            },
+                            {
+                                "img": "../images/new/gedan_10.jpg",
+                                "p": "最是粤语情深处",
+                                "num": 626714
+                            }
+                        ]
+                    },
+                    controllerAs: "gedan"
+                })
+                .when('/geshou', {
+                    templateUrl: 'geshou.html',  // 连接的url文件
+                    controller: function ($scope) {
+                        this.data = [
+                            {
+                                "man": "华语男歌手",
+                                "girl": "华语女歌手",
+                                "all": "华语组合"
+                            },
+                            {
+                                "man": "日韩男歌手",
+                                "girl": "日韩女歌手",
+                                "all": "日韩组合"
+                            },
+                            {
+                                "man": "欧美男歌手",
+                                "girl": "欧美女歌手",
+                                "all": "欧美组合"
+                            }
+                        ]
+                    },
+                    controllerAs: "geshou"
+                })
+                .otherwise({redirectTo: '/new'})
+    }]);
+
+
+    $('nav').on('click', 'a', function () {
+        $(this).addClass('pitch').siblings().removeClass('pitch');
+    });
+
+    // banner 轮播
+    var swiper_con = new Swiper(".swiper-container", {
+        autoplay: 1000
+    });
+
+</script>
+</body>
+</html>
